@@ -11,20 +11,7 @@ function chuckRoute() {
   var chuck = new express.Router();
   chuck.use(cors());
   chuck.use(bodyParser());
-  // GET endpoint to get jokes categories
-  chuck.get('/categories', function(req, res) {
-    request('https://api.chucknorris.io/jokes/categories',
-      function (error, response, body) {
-         var obj = JSON.parse(body);
-         var arr=Array();
-	     for(var i in obj)
-           {
-		   var resobj={key:obj[i], value:obj[i]};
-		   arr.push(resobj);
-	       }
-         res.json(arr); 
-      });
-  });
+  
   // GET REST endpoint for a random Chuck Norris joke from api.chucknorris.io
   chuck.get('/', function(req, res) {
     // first see if it's in cache, if not retrieve from source
@@ -48,16 +35,28 @@ function chuckRoute() {
           });
         });
       }
-      else // found in cache: return it
+      else // found in RHMAP cache: return it
       {
       res.send(res2.toString());
       }
     });
-
-
-    // see http://expressjs.com/4x/api.html#res.json
-    //res.json({msg: 'Hello ' + world});
   });
+
+  // GET endpoint to get jokes categories, useful as datasource in forms
+  chuck.get('/categories', function(req, res) {
+    request('https://api.chucknorris.io/jokes/categories',
+      function (error, response, body) {
+         var obj = JSON.parse(body);
+         var arr=Array();
+	     for(var i in obj)
+           {
+		   var resobj={key:obj[i], value:obj[i]};
+		   arr.push(resobj);
+	       }
+         res.json(arr); 
+      });
+  });
+
   return chuck;
 }
 
