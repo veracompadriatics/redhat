@@ -1,5 +1,7 @@
-# Red Hat MAP MBaaS service demo
-# retrieves random joke from api.chucknorris.io, having checked local platform cache first
+/*
+Red Hat MAP MBaaS service demo
+retrieves random joke from api.chucknorris.io, having checked local platform cache first
+*/
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
